@@ -1,10 +1,2639 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>WPWatch</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WPWatch — Know When Your WordPress Website Needs Attention</title>
+
+    <meta name="description" content="WPWatch watches your WordPress website and tells you when something actually needs attention. Monitor performance, traffic, plugins, errors, activity and more.">
+
+    <style>
+        :root {
+            --bg: #07111f;
+            --bg-soft: #0b1728;
+            --card: #0f1d30;
+            --card-hover: #13243a;
+            --border: #1d3047;
+
+            --green: #39e58c;
+            --green-dark: #21c875;
+            --green-soft: rgba(57, 229, 140, 0.10);
+
+            --white: #ffffff;
+            --text: #dce6f2;
+            --muted: #8fa1b7;
+
+            --yellow: #f5c451;
+            --red: #ff6b6b;
+            --blue: #62a9ff;
+
+            --max: 1180px;
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        .container {
+            width: min(var(--max), calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7, 17, 31, 0.88);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .nav {
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: var(--green);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 10px 18px;
+            border-radius: 9px;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            border-color: #35506e;
+            color: var(--white);
+        }
+
+        .primary-btn {
+            border: none;
+            background: var(--green);
+            color: #04100a;
+            padding: 11px 19px;
+            border-radius: 9px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .primary-btn:hover {
+            background: var(--green-dark);
+            transform: translateY(-1px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            border: 0;
+            background: transparent;
+            color: white;
+            font-size: 26px;
+            cursor: pointer;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            padding: 105px 0 90px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 650px;
+            height: 500px;
+            background: rgba(57,229,140,.07);
+            filter: blur(100px);
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            margin: auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 13px;
+            border: 1px solid rgba(57,229,140,.25);
+            background: var(--green-soft);
+            color: var(--green);
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .eyebrow-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--green);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 70px);
+            line-height: 1.03;
+            letter-spacing: -3px;
+            color: var(--white);
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: var(--green);
+        }
+
+        .hero p {
+            max-width: 690px;
+            margin: auto;
+            color: var(--muted);
+            font-size: 19px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            margin-top: 34px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero-btn {
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+
+        .hero-btn.primary {
+            background: var(--green);
+            color: #04100a;
+            border-color: var(--green);
+        }
+
+        .hero-btn.secondary {
+            background: transparent;
+            color: var(--white);
+        }
+
+        .hero-btn.secondary:hover {
+            background: var(--card);
+        }
+
+        .hero-note {
+            margin-top: 17px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* =========================
+           DASHBOARD MOCKUP
+        ========================= */
+
+        .dashboard-wrap {
+            max-width: 1020px;
+            margin: 70px auto 0;
+            position: relative;
+        }
+
+        .dashboard {
+            background: #0a1626;
+            border: 1px solid #21364f;
+            border-radius: 18px;
+            box-shadow: 0 35px 90px rgba(0,0,0,.45);
+            overflow: hidden;
+        }
+
+        .dashboard-top {
+            height: 48px;
+            background: #0d1b2d;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0 18px;
+        }
+
+        .window-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #395069;
+        }
+
+        .dashboard-body {
+            padding: 25px;
+        }
+
+        .dashboard-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .dashboard-title h3 {
+            color: white;
+            font-size: 18px;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            color: var(--green);
+            background: var(--green-soft);
+            padding: 7px 10px;
+            border-radius: 7px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--green);
+            border-radius: 50%;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .metric {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 17px;
+            border-radius: 12px;
+        }
+
+        .metric-label {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .metric-value {
+            color: white;
+            font-size: 22px;
+            font-weight: 750;
+        }
+
+        .metric-small {
+            font-size: 11px;
+            color: var(--green);
+            margin-top: 3px;
+        }
+
+        /* =========================
+           TRUST BAR
+        ========================= */
+
+        .trust {
+            padding: 35px 0;
+            border-top: 1px solid rgba(255,255,255,.05);
+            border-bottom: 1px solid rgba(255,255,255,.05);
+        }
+
+        .trust-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 45px;
+            flex-wrap: wrap;
+            color: #6e8198;
+            font-size: 13px;
+        }
+
+        /* =========================
+           GENERAL SECTIONS
+        ========================= */
+
+        section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            max-width: 720px;
+            margin: 0 auto 55px;
+            text-align: center;
+        }
+
+        .section-label {
+            color: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(32px, 4vw, 47px);
+            line-height: 1.1;
+            letter-spacing: -1.8px;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--muted);
+            font-size: 17px;
+        }
+
+        /* =========================
+           PROBLEM
+        ========================= */
+
+        .problem {
+            background: var(--bg-soft);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .problem-card {
+            border: 1px solid var(--border);
+            background: var(--card);
+            padding: 28px;
+            border-radius: var(--radius);
+        }
+
+        .problem-card h3 {
+            color: white;
+            margin-bottom: 9px;
+            font-size: 18px;
+        }
+
+        .problem-card p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .problem-icon {
+            font-size: 22px;
+            color: var(--green);
+            margin-bottom: 18px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           MONITORING
+        ========================= */
+
+        .monitor-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 27px;
+            border-radius: var(--radius);
+            transition: .2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            background: var(--card-hover);
+            border-color: #29445f;
+        }
+
+        .feature-card.pro {
+            position: relative;
+        }
+
+        .pro-label {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            color: var(--green);
+            background: var(--green-soft);
+            border: 1px solid rgba(57,229,140,.2);
+            border-radius: 5px;
+            padding: 3px 7px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .feature-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            background: var(--green-soft);
+            border-radius: 10px;
+            color: var(--green);
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        .feature-card h3 {
+            color: white;
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        /* =========================
+           HOW IT WORKS
+        ========================= */
+
+        .steps {
+            background: var(--bg-soft);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            position: relative;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: var(--green);
+            color: #04100a;
+            font-weight: 900;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: var(--muted);
+            font-size: 14px;
+            max-width: 280px;
+            margin: auto;
+        }
+
+        /* =========================
+           ALERT SECTION
+        ========================= */
+
+        .alert-section {
+            background: var(--bg);
+        }
+
+        .alert-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 65px;
+            align-items: center;
+        }
+
+        .alert-text h2 {
+            color: white;
+            font-size: clamp(32px, 4vw, 45px);
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 18px;
+        }
+
+        .alert-text p {
+            color: var(--muted);
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .alert-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .alert-list div {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .check {
+            color: var(--green);
+            font-weight: 900;
+        }
+
+        .notification {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 25px 60px rgba(0,0,0,.3);
+        }
+
+        .notification-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .notification-title {
+            font-weight: 750;
+            color: white;
+        }
+
+        .warning {
+            color: var(--yellow);
+            background: rgba(245,196,81,.10);
+            border: 1px solid rgba(245,196,81,.18);
+            border-radius: 9px;
+            padding: 12px;
+            font-size: 13px;
+            margin-bottom: 13px;
+        }
+
+        .notification-content h4 {
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .notification-content p {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .notification-action {
+            display: inline-block;
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* =========================
+           PRICING
+        ========================= */
+
+        .pricing {
+            background: var(--bg-soft);
+        }
+
+        .pricing-grid {
+            max-width: 850px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .price-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 34px;
+            position: relative;
+        }
+
+        .price-card.featured {
+            border: 1px solid var(--green);
+            box-shadow: 0 20px 60px rgba(57,229,140,.08);
+        }
+
+        .popular {
+            position: absolute;
+            top: -12px;
+            left: 25px;
+            background: var(--green);
+            color: #04100a;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+        }
+
+        .price-name {
+            color: white;
+            font-size: 20px;
+            font-weight: 750;
+            margin-bottom: 8px;
+        }
+
+        .price-description {
+            color: var(--muted);
+            font-size: 13px;
+            min-height: 42px;
+        }
+
+        .price {
+            margin: 25px 0;
+            color: white;
+        }
+
+        .price strong {
+            font-size: 44px;
+            letter-spacing: -2px;
+        }
+
+        .price span {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .price-btn {
+            width: 100%;
+            padding: 13px;
+            border-radius: 9px;
+            font-weight: 750;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: white;
+        }
+
+        .price-btn.green {
+            background: var(--green);
+            color: #04100a;
+            border-color: var(--green);
+        }
+
+        .price-btn:hover {
+            opacity: .9;
+        }
+
+        .price-features {
+            margin-top: 25px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .price-feature {
+            display: flex;
+            gap: 9px;
+            color: var(--text);
+            font-size: 13px;
+        }
+
+        .price-feature.disabled {
+            color: #5f7185;
+        }
+
+        /* =========================
+           COMPARISON
+        ========================= */
+
+        .comparison {
+            overflow-x: auto;
+        }
+
+        .comparison-table {
+            width: 100%;
+            min-width: 700px;
+            border-collapse: collapse;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 16px 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        .comparison-table th {
+            color: white;
+            background: #101f33;
+        }
+
+        .comparison-table td {
+            color: var(--muted);
+        }
+
+        .comparison-table td:not(:first-child),
+        .comparison-table th:not(:first-child) {
+            text-align: center;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .yes {
+            color: var(--green) !important;
+            font-weight: 800;
+        }
+
+        .no {
+            color: #5f7185 !important;
+        }
+
+        /* =========================
+           CTA
+        ========================= */
+
+        .cta {
+            padding: 110px 0;
+        }
+
+        .cta-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 70px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: "";
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: rgba(57,229,140,.08);
+            filter: blur(90px);
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .cta-box > * {
+            position: relative;
+        }
+
+        .cta-box h2 {
+            font-size: clamp(32px, 4vw, 48px);
+            color: white;
+            letter-spacing: -1.5px;
+            margin-bottom: 14px;
+        }
+
+        .cta-box p {
+            color: var(--muted);
+            max-width: 600px;
+            margin: auto auto 28px;
+        }
+
+        /* =========================
+           FAQ
+        ========================= */
+
+        .faq {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 20px 0;
+            border: 0;
+            background: transparent;
+            color: white;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 650;
+        }
+
+        .faq-plus {
+            color: var(--green);
+            font-size: 20px;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 0 20px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 45px 0;
+            background: #050d18;
+        }
+
+        .footer-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .footer-copy {
+            color: #65788e;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 22px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.75);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            width: min(440px, 100%);
+            background: #0d1a2b;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            font-size: 23px;
+            cursor: pointer;
+        }
+
+        .modal h2 {
+            color: white;
+            margin-bottom: 6px;
+        }
+
+        .modal-subtitle {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #b7c6d6;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 13px;
+            background: #081423;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: white;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--green);
+        }
+
+        .form-submit {
+            width: 100%;
+            margin-top: 5px;
+            padding: 13px;
+            background: var(--green);
+            color: #04100a;
+            border: 0;
+            border-radius: 8px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .modal-switch {
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 18px;
+        }
+
+        .modal-switch button {
+            border: 0;
+            background: transparent;
+            color: var(--green);
+            cursor: pointer;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 76px;
+                left: 0;
+                right: 0;
+                background: #081321;
+                padding: 20px;
+                border-bottom: 1px solid var(--border);
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links.mobile-open {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-actions {
+                display: none;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .monitor-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .alert-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 45px;
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .container {
+                width: min(var(--max), calc(100% - 28px));
+            }
+
+            section {
+                padding: 75px 0;
+            }
+
+            .hero {
+                padding: 75px 0 65px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .dashboard-body {
+                padding: 15px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .monitor-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+            }
+
+            .trust-content {
+                gap: 18px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>WPWatch</h1>
-    <p>We watch your WordPress website. You don't have to.</p>
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<header>
+    <div class="container nav">
+
+        <a href="#" class="logo">
+            WP<span>Watch</span>
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+
+        <div class="nav-actions">
+            <button class="login-btn" onclick="openModal('loginModal')">
+                Log in
+            </button>
+
+            <button class="primary-btn" onclick="openModal('signupModal')">
+                Start Free
+            </button>
+        </div>
+
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            ☰
+        </button>
+
+    </div>
+</header>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<main>
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                <span class="eyebrow-dot"></span>
+                WordPress monitoring made simple
+            </div>
+
+            <h1>
+                Stop babysitting your
+                <span>WordPress website.</span>
+            </h1>
+
+            <p>
+                WPWatch watches your website for you and tells you when
+                something actually needs attention. No technical knowledge
+                required. No monthly developer needed just to keep an eye on things.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button
+                    class="hero-btn primary"
+                    onclick="openModal('signupModal')">
+                    Watch My Website — Free
+                </button>
+
+                <a href="#pricing" class="hero-btn secondary">
+                    See Pro Features
+                </a>
+
+            </div>
+
+            <div class="hero-note">
+                Free forever for 1 website · No credit card required
+            </div>
+
+        </div>
+
+
+        <!-- Dashboard mockup -->
+
+        <div class="dashboard-wrap">
+
+            <div class="dashboard">
+
+                <div class="dashboard-top">
+                    <span class="window-dot"></span>
+                    <span class="window-dot"></span>
+                    <span class="window-dot"></span>
+                </div>
+
+                <div class="dashboard-body">
+
+                    <div class="dashboard-title">
+
+                        <div>
+                            <h3>mybusiness.com</h3>
+                        </div>
+
+                        <div class="status">
+                            <span class="status-dot"></span>
+                            Everything looks good
+                        </div>
+
+                    </div>
+
+                    <div class="dashboard-grid">
+
+                        <div class="metric">
+                            <div class="metric-label">Website Status</div>
+                            <div class="metric-value">Online</div>
+                            <div class="metric-small">No issues detected</div>
+                        </div>
+
+                        <div class="metric">
+                            <div class="metric-label">Performance</div>
+                            <div class="metric-value">94</div>
+                            <div class="metric-small">Good performance</div>
+                        </div>
+
+                        <div class="metric">
+                            <div class="metric-label">Traffic</div>
+                            <div class="metric-value">4,821</div>
+                            <div class="metric-small">Visitors this month</div>
+                        </div>
+
+                        <div class="metric">
+                            <div class="metric-label">SSL</div>
+                            <div class="metric-value">Valid</div>
+                            <div class="metric-small">72 days remaining</div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     TRUST BAR
+========================= -->
+
+<div class="trust">
+
+    <div class="container trust-content">
+
+        <span>WordPress</span>
+        <span>Automatic monitoring</span>
+        <span>Simple alerts</span>
+        <span>No developer required</span>
+        <span>Free to start</span>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     PROBLEM
+========================= -->
+
+<section class="problem">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-label">
+                The problem
+            </div>
+
+            <h2>
+                Your website shouldn't need a babysitter.
+            </h2>
+
+            <p>
+                But ignoring it completely isn't a great idea either.
+                WPWatch sits in the middle.
+            </p>
+
+        </div>
+
+
+        <div class="problem-grid">
+
+            <div class="problem-card">
+
+                <div class="problem-icon">01</div>
+
+                <h3>
+                    "I don't know if my website is okay."
+                </h3>
+
+                <p>
+                    Your website can have errors, outdated software,
+                    performance problems or security issues without
+                    you knowing.
+                </p>
+
+            </div>
+
+
+            <div class="problem-card">
+
+                <div class="problem-icon">02</div>
+
+                <h3>
+                    "I don't want to pay a developer every month."
+                </h3>
+
+                <p>
+                    If nothing is wrong, paying someone just to check
+                    your website every month can feel unnecessary.
+                </p>
+
+            </div>
+
+
+            <div class="problem-card">
+
+                <div class="problem-icon">03</div>
+
+                <h3>
+                    "Just tell me when I need to do something."
+                </h3>
+
+                <p>
+                    That's exactly what WPWatch is designed to do.
+                    Stay quiet when everything is fine and alert you
+                    when something needs attention.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FEATURES
+========================= -->
+
+<section id="features">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-label">
+                What WPWatch monitors
+            </div>
+
+            <h2>
+                Know what's happening inside your website.
+            </h2>
+
+            <p>
+                WPWatch turns technical WordPress information into
+                simple things you can actually understand.
+            </p>
+
+        </div>
+
+
+        <div class="monitor-grid">
+
+
+            <!-- FREE + PRO -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">S</div>
+
+                <h3>Website Performance</h3>
+
+                <p>
+                    Monitor website speed and performance so you know
+                    when your website starts getting slower.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">T</div>
+
+                <h3>Website Traffic</h3>
+
+                <p>
+                    See your website traffic and understand how activity
+                    changes over time.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">P</div>
+
+                <h3>Plugin Changes</h3>
+
+                <p>
+                    See which plugins were installed or removed and
+                    when those changes happened.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">E</div>
+
+                <h3>WordPress Logs & Errors</h3>
+
+                <p>
+                    See important WordPress errors and logs without
+                    digging through technical files yourself.
+                </p>
+
+            </div>
+
+
+            <!-- PRO -->
+
+            <div class="feature-card pro">
+
+                <span class="pro-label">Pro</span>
+
+                <div class="feature-icon">A</div>
+
+                <h3>Plugin Activity</h3>
+
+                <p>
+                    See how active each plugin is and compare activity
+                    between plugins on your website.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card pro">
+
+                <span class="pro-label">Pro</span>
+
+                <div class="feature-icon">M</div>
+
+                <h3>Plugin Space Usage</h3>
+
+                <p>
+                    Find out which plugins are using the most storage
+                    and identify plugins consuming unusual amounts of space.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card pro">
+
+                <span class="pro-label">Pro</span>
+
+                <div class="feature-icon">D</div>
+
+                <h3>Website Storage</h3>
+
+                <p>
+                    Monitor your website's total size and understand
+                    how your storage usage changes.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card pro">
+
+                <span class="pro-label">Pro</span>
+
+                <div class="feature-icon">U</div>
+
+                <h3>Member Activity</h3>
+
+                <p>
+                    Monitor user activity including posts, comments,
+                    pages and new users added or removed.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card pro">
+
+                <span class="pro-label">Pro</span>
+
+                <div class="feature-icon">C</div>
+
+                <h3>Cache Monitoring</h3>
+
+                <p>
+                    See how many cache files exist and how much storage
+                    your cache is consuming.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     HOW IT WORKS
+========================= -->
+
+<section class="steps" id="how-it-works">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-label">
+                How it works
+            </div>
+
+            <h2>
+                Set it up once. Stop worrying about it.
+            </h2>
+
+            <p>
+                WPWatch is designed for people who don't want to become
+                WordPress developers just to own a website.
+            </p>
+
+        </div>
+
+
+        <div class="steps-grid">
+
+            <div class="step">
+
+                <div class="step-number">1</div>
+
+                <h3>Connect your website</h3>
+
+                <p>
+                    Install WPWatch on your WordPress website and
+                    connect it to your account.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">2</div>
+
+                <h3>We keep watching</h3>
+
+                <p>
+                    WPWatch checks your website and tracks the things
+                    that matter.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">3</div>
+
+                <h3>You get notified</h3>
+
+                <p>
+                    When something needs attention, you'll know.
+                    When everything is fine, you can get on with your day.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ALERT
+========================= -->
+
+<section class="alert-section">
+
+    <div class="container">
+
+        <div class="alert-layout">
+
+            <div class="alert-text">
+
+                <div class="section-label">
+                    Only worry when you need to
+                </div>
+
+                <h2>
+                    No endless WordPress dashboards.
+                </h2>
+
+                <p>
+                    You don't need to understand every technical detail.
+                    WPWatch helps you know what matters and what can wait.
+                </p>
+
+                <div class="alert-list">
+
+                    <div>
+                        <span class="check">✓</span>
+                        Website goes offline? We'll let you know.
+                    </div>
+
+                    <div>
+                        <span class="check">✓</span>
+                        Important errors? We'll show you what happened.
+                    </div>
+
+                    <div>
+                        <span class="check">✓</span>
+                        Website getting slower? You'll see it.
+                    </div>
+
+                    <div>
+                        <span class="check">✓</span>
+                        Everything healthy? You don't need to do anything.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="notification">
+
+                <div class="notification-head">
+
+                    <div class="notification-title">
+                        WPWatch Alert
+                    </div>
+
+                    <span class="warning">
+                        Needs attention
+                    </span>
+
+                </div>
+
+                <div class="notification-content">
+
+                    <h4>
+                        Your website has an issue
+                    </h4>
+
+                    <p>
+                        WPWatch detected an error affecting your website.
+                        We recommend checking it before it becomes a bigger problem.
+                    </p>
+
+                    <a href="#pricing" class="notification-action">
+                        View details →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PRICING
+========================= -->
+
+<section class="pricing" id="pricing">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-label">
+                Simple pricing
+            </div>
+
+            <h2>
+                Start free. Upgrade when you need more.
+            </h2>
+
+            <p>
+                One website is free. Pro gives you deeper monitoring,
+                more history and professional exports.
+            </p>
+
+        </div>
+
+
+        <div class="pricing-grid">
+
+
+            <!-- FREE -->
+
+            <div class="price-card">
+
+                <div class="price-name">
+                    Free
+                </div>
+
+                <div class="price-description">
+                    Everything you need to keep an eye on one website.
+                </div>
+
+                <div class="price">
+                    <strong>$0</strong>
+                    <span>forever</span>
+                </div>
+
+                <button
+                    class="price-btn"
+                    onclick="openModal('signupModal')">
+                    Start Free
+                </button>
+
+
+                <div class="price-features">
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        1 website
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Website performance & speed
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Website traffic
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Plugin installed/removed tracking
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        WordPress logs & errors
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        View reports
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        60 days report history
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Monthly reports
+                    </div>
+
+                    <div class="price-feature disabled">
+                        <span>—</span>
+                        PDF export
+                    </div>
+
+                    <div class="price-feature disabled">
+                        <span>—</span>
+                        CSV export
+                    </div>
+
+                    <div class="price-feature disabled">
+                        <span>—</span>
+                        Email reports
+                    </div>
+
+                    <div class="price-feature disabled">
+                        <span>—</span>
+                        Advanced monitoring
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRO -->
+
+            <div class="price-card featured">
+
+                <div class="popular">
+                    Most popular
+                </div>
+
+                <div class="price-name">
+                    Pro
+                </div>
+
+                <div class="price-description">
+                    Deeper monitoring and reporting for people who want more control.
+                </div>
+
+                <div class="price">
+                    <strong>$10</strong>
+                    <span>/ month</span>
+                </div>
+
+                <button
+                    class="price-btn green"
+                    onclick="openModal('signupModal')">
+                    Start Pro
+                </button>
+
+
+                <div class="price-features">
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Up to 2 websites
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Everything in Free
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Weekly, monthly or yearly reports
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Email report delivery
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        PDF export
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        CSV export
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Plugin activity counts
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Plugin space usage
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Website storage monitoring
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Member activity monitoring
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Cache file monitoring
+                    </div>
+
+                    <div class="price-feature">
+                        <span class="yes">✓</span>
+                        Extended report history
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     COMPARISON
+========================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-label">
+                Free vs Pro
+            </div>
+
+            <h2>
+                Pay only when you need the extra visibility.
+            </h2>
+
+        </div>
+
+
+        <div class="comparison">
+
+            <table class="comparison-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Monitoring & Reports</th>
+                        <th>Free</th>
+                        <th>Pro</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Websites</td>
+                        <td class="yes">1</td>
+                        <td class="yes">2</td>
+                    </tr>
+
+                    <tr>
+                        <td>Performance / speed</td>
+                        <td class="yes">✓</td>
+                        <td class="yes">✓</td>
+                    </tr>
+
+                    <tr>
+                        <td>Website traffic</td>
+                        <td class="yes">✓</td>
+                        <td class="yes">✓</td>
+                    </tr>
+
+                    <tr>
+                        <td>Plugin installed / removed</td>
+                        <td class="yes">✓</td>
+                        <td class="yes">✓</td>
+                    </tr>
+
+                    <tr>
+                        <td>Plugin activity count</td>
+                        <td class="no">—</td>
+                        <td class="yes">✓</td>
+                    </tr>
+
+                    <tr>
+                        <td>Plugin storage usage</td>
+                        <td class="no">—</td>
+                        <td class="yes">✓</td>
+                    </tr>
+
+                    <tr>
+                        <td>WordPress logs & errors</td>
+                        <td class="yes">✓</td>
+                        <td class="yes">✓</td>
+                    </tr>
+
+                    <tr>
+                        <td>Website storage monitor</td>
+                        <td class="no">—</td>
+                        <td class="yes">✓</td>
+                    </tr>
+
+                    <tr>
+                        <td>Member activity</td>
+                        <td class="no">—</td>
+                        <td class="yes">✓</td>
+                    </tr>
+
+                    <tr>
+                        <td>Cache monitoring</td>
+                        <td class="no">—</td>
+                        <td class="yes">✓</td>
+                    </tr>
+
+                    <tr>
+                        <td>Report history</td>
+                        <td class="yes">60 days</td>
+                        <td class="yes">Extended</td>
+                    </tr>
+
+                    <tr>
+                        <td>Report frequency</td>
+                        <td class="yes">Monthly</td>
+                        <td class="yes">Weekly / Monthly / Yearly</td>
+                    </tr>
+
+                    <tr>
+                        <td>PDF export</td>
+                        <td class="no">—</td>
+                        <td class="yes">✓</td>
+                    </tr>
+
+                    <tr>
+                        <td>CSV export</td>
+                        <td class="no">—</td>
+                        <td class="yes">✓</td>
+                    </tr>
+
+                    <tr>
+                        <td>Email reports</td>
+                        <td class="no">—</td>
+                        <td class="yes">✓</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CTA
+========================= -->
+
+<section class="cta">
+
+    <div class="container">
+
+        <div class="cta-box">
+
+            <div class="section-label">
+                Start today
+            </div>
+
+            <h2>
+                Your website is your business.
+                Know when it needs you.
+            </h2>
+
+            <p>
+                Start monitoring one WordPress website for free.
+                No credit card. No monthly developer. No complicated setup.
+            </p>
+
+            <button
+                class="primary-btn"
+                style="padding:14px 25px;"
+                onclick="openModal('signupModal')">
+                Start Watching My Website
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FAQ
+========================= -->
+
+<section id="faq">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-label">
+                FAQ
+            </div>
+
+            <h2>
+                Questions? We've got answers.
+            </h2>
+
+        </div>
+
+
+        <div class="faq">
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+                    Do I need to be a developer?
+                    <span class="faq-plus">+</span>
+                </button>
+
+                <div class="faq-answer">
+                    No. WPWatch is designed for WordPress website owners
+                    who don't want to deal with technical details.
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+                    What does the free plan include?
+                    <span class="faq-plus">+</span>
+                </button>
+
+                <div class="faq-answer">
+                    The free plan lets you monitor one website, view basic
+                    reports and access up to 60 days of report history.
+                    Free users can generate monthly reports but cannot
+                    export them to PDF or CSV or send them by email.
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+                    What does Pro cost?
+                    <span class="faq-plus">+</span>
+                </button>
+
+                <div class="faq-answer">
+                    WPWatch Pro is $10 per month and supports up to two
+                    websites with deeper monitoring, flexible reporting
+                    schedules and export options.
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+                    Can Pro reports be emailed?
+                    <span class="faq-plus">+</span>
+                </button>
+
+                <div class="faq-answer">
+                    Yes. Pro users can choose to receive reports by email
+                    and can export reports as PDF or CSV.
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+                    How often does WPWatch check my website?
+                    <span class="faq-plus">+</span>
+                </button>
+
+                <div class="faq-answer">
+                    Monitoring frequency will depend on the type of check.
+                    WPWatch is designed to monitor important website
+                    conditions automatically and notify you when something
+                    needs attention.
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+                    Will WPWatch fix problems for me?
+                    <span class="faq-plus">+</span>
+                </button>
+
+                <div class="faq-answer">
+                    WPWatch is primarily a monitoring and notification
+                    service. It tells you what is happening and when
+                    something needs attention. Some issues may still
+                    require you or a WordPress professional to fix them.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="container footer-grid">
+
+        <div>
+
+            <div class="logo">
+                WP<span>Watch</span>
+            </div>
+
+            <div class="footer-copy">
+                Watch your WordPress website. Don't babysit it.
+            </div>
+
+            <div class="footer-copy">
+                © 2026 WPWatch. All rights reserved.
+            </div>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#faq">FAQ</a>
+            <a href="#" onclick="openModal('loginModal'); return false;">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================
+     LOGIN MODAL
+========================= -->
+
+<div class="modal-overlay" id="loginModal">
+
+    <div class="modal">
+
+        <button class="modal-close" onclick="closeModals()">
+            ×
+        </button>
+
+        <h2>Welcome back</h2>
+
+        <div class="modal-subtitle">
+            Log in to your WPWatch account.
+        </div>
+
+        <form onsubmit="demoSubmit(event, 'login')">
+
+            <div class="form-group">
+
+                <label>Email address</label>
+
+                <input
+                    type="email"
+                    placeholder="you@example.com"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    placeholder="Your password"
+                    required>
+
+            </div>
+
+
+            <button class="form-submit" type="submit">
+                Log in
+            </button>
+
+        </form>
+
+
+        <div class="modal-switch">
+
+            Don't have an account?
+
+            <button onclick="switchModal('loginModal','signupModal')">
+                Create one
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     SIGNUP MODAL
+========================= -->
+
+<div class="modal-overlay" id="signupModal">
+
+    <div class="modal">
+
+        <button class="modal-close" onclick="closeModals()">
+            ×
+        </button>
+
+        <h2>Start watching for free</h2>
+
+        <div class="modal-subtitle">
+            Monitor your first WordPress website at no cost.
+        </div>
+
+        <form onsubmit="demoSubmit(event, 'signup')">
+
+            <div class="form-group">
+
+                <label>Your name</label>
+
+                <input
+                    type="text"
+                    placeholder="Your name"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Email address</label>
+
+                <input
+                    type="email"
+                    placeholder="you@example.com"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    placeholder="Create a password"
+                    minlength="8"
+                    required>
+
+            </div>
+
+
+            <button class="form-submit" type="submit">
+                Create Free Account
+            </button>
+
+        </form>
+
+
+        <div class="modal-switch">
+
+            Already have an account?
+
+            <button onclick="switchModal('signupModal','loginModal')">
+                Log in
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+    /* =========================
+       MOBILE MENU
+    ========================= */
+
+    function toggleMobileMenu() {
+
+        const nav = document.getElementById("navLinks");
+
+        nav.classList.toggle("mobile-open");
+
+    }
+
+
+    /* =========================
+       MODALS
+    ========================= */
+
+    function openModal(id) {
+
+        closeModals();
+
+        document.getElementById(id).classList.add("active");
+
+        document.body.style.overflow = "hidden";
+
+    }
+
+
+    function closeModals() {
+
+        document.querySelectorAll(".modal-overlay").forEach(function(modal) {
+
+            modal.classList.remove("active");
+
+        });
+
+        document.body.style.overflow = "";
+
+    }
+
+
+    function switchModal(current, next) {
+
+        closeModals();
+
+        openModal(next);
+
+    }
+
+
+    document.querySelectorAll(".modal-overlay").forEach(function(overlay) {
+
+        overlay.addEventListener("click", function(e) {
+
+            if (e.target === overlay) {
+
+                closeModals();
+
+            }
+
+        });
+
+    });
+
+
+    document.addEventListener("keydown", function(e) {
+
+        if (e.key === "Escape") {
+
+            closeModals();
+
+        }
+
+    });
+
+
+    /* =========================
+       DEMO FORMS
+    ========================= */
+
+    function demoSubmit(event, type) {
+
+        event.preventDefault();
+
+        if (type === "signup") {
+
+            alert(
+                "Thanks for signing up for WPWatch! " +
+                "The account system will be connected here when the WPWatch backend is ready."
+            );
+
+        } else {
+
+            alert(
+                "The WPWatch login system will be connected here when the backend is ready."
+            );
+
+        }
+
+    }
+
+
+    /* =========================
+       FAQ
+    ========================= */
+
+    document.querySelectorAll(".faq-question").forEach(function(button) {
+
+        button.addEventListener("click", function() {
+
+            const item = button.parentElement;
+
+            const wasActive = item.classList.contains("active");
+
+            document.querySelectorAll(".faq-item").forEach(function(other) {
+
+                other.classList.remove("active");
+
+                const plus = other.querySelector(".faq-plus");
+
+                if (plus) {
+                    plus.textContent = "+";
+                }
+
+            });
+
+
+            if (!wasActive) {
+
+                item.classList.add("active");
+
+                const plus = item.querySelector(".faq-plus");
+
+                if (plus) {
+                    plus.textContent = "−";
+                }
+
+            }
+
+        });
+
+    });
+
+
+    /* =========================
+       CLOSE MOBILE MENU AFTER CLICK
+    ========================= */
+
+    document.querySelectorAll(".nav-links a").forEach(function(link) {
+
+        link.addEventListener("click", function() {
+
+            document.getElementById("navLinks")
+                .classList.remove("mobile-open");
+
+        });
+
+    });
+
+</script>
+
 </body>
 </html>
