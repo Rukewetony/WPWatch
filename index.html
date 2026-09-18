@@ -225,6 +225,54 @@
         }
 
         /* =========================
+           ACTIVE INSTALLS BOX
+        ========================= */
+
+        .install-count {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 27px;
+            padding: 15px 18px;
+            width: fit-content;
+            max-width: 100%;
+            background: rgba(40,167,69,.07);
+            border: 1px solid rgba(40,167,69,.25);
+            border-radius: 12px;
+        }
+
+        .install-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(40,167,69,.13);
+            color: var(--green-light);
+            font-size: 21px;
+            flex-shrink: 0;
+        }
+
+        .install-text {
+            line-height: 1.25;
+        }
+
+        .install-number {
+            display: block;
+            font-size: 20px;
+            font-weight: 850;
+            color: #fff;
+        }
+
+        .install-label {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        /* =========================
            DASHBOARD MOCKUP
         ========================= */
 
@@ -813,6 +861,10 @@
             .hero-buttons .btn {
                 width: 100%;
             }
+
+            .install-count {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -831,14 +883,27 @@
         </a>
 
         <div class="nav-links">
-            <a href="#features">Features</a>
-            <a href="#how-it-works">How It Works</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#faq">FAQ</a>
+
+            <a href="#features">
+                Features
+            </a>
+
+            <a href="#how-it-works">
+                How It Works
+            </a>
+
+            <a href="#pricing">
+                Pricing
+            </a>
+
+            <a href="#faq">
+                FAQ
+            </a>
 
             <a href="wpwatch-plugin.zip" class="nav-cta">
                 Download Plugin
             </a>
+
         </div>
 
         <div class="mobile-menu">
@@ -891,10 +956,35 @@
                 Free to start · No monthly developer retainer required
             </div>
 
+
+            <!-- ACTIVE INSTALLS -->
+
+            <div class="install-count">
+
+                <div class="install-icon">
+                    ✓
+                </div>
+
+                <div class="install-text">
+
+                    <span class="install-number">
+                        1,200+
+                    </span>
+
+                    <span class="install-label">
+                        Active Installs
+                    </span>
+
+                </div>
+
+            </div>
+
         </div>
 
 
-        <!-- Dashboard Preview -->
+        <!-- =========================
+             DASHBOARD PREVIEW
+        ========================= -->
 
         <div class="dashboard">
 
@@ -914,42 +1004,97 @@
             <div class="dash-grid">
 
                 <div class="dash-card">
-                    <small>Website Speed</small>
-                    <div class="dash-number good">Good</div>
+
+                    <small>
+                        Website Speed
+                    </small>
+
+                    <div class="dash-number good">
+                        Good
+                    </div>
+
                 </div>
 
-                <div class="dash-card">
-                    <small>WordPress</small>
-                    <div class="dash-number good">Healthy</div>
-                </div>
 
                 <div class="dash-card">
-                    <small>Plugins</small>
-                    <div class="dash-number">18</div>
+
+                    <small>
+                        WordPress
+                    </small>
+
+                    <div class="dash-number good">
+                        Healthy
+                    </div>
+
                 </div>
 
+
                 <div class="dash-card">
-                    <small>Errors</small>
-                    <div class="dash-number good">0</div>
+
+                    <small>
+                        Plugins
+                    </small>
+
+                    <div class="dash-number">
+                        18
+                    </div>
+
                 </div>
+
+
+                <div class="dash-card">
+
+                    <small>
+                        Errors
+                    </small>
+
+                    <div class="dash-number good">
+                        0
+                    </div>
+
+                </div>
+
 
                 <div class="dash-card dash-wide">
 
-                    <small>Recent Activity</small>
+                    <small>
+                        Recent Activity
+                    </small>
 
                     <div class="activity">
-                        <span>Plugin updated</span>
-                        <span class="good">Today</span>
+
+                        <span>
+                            Plugin updated
+                        </span>
+
+                        <span class="good">
+                            Today
+                        </span>
+
                     </div>
 
                     <div class="activity">
-                        <span>Website scan</span>
-                        <span class="good">Passed</span>
+
+                        <span>
+                            Website scan
+                        </span>
+
+                        <span class="good">
+                            Passed
+                        </span>
+
                     </div>
 
                     <div class="activity">
-                        <span>Traffic check</span>
-                        <span>1,284 visits</span>
+
+                        <span>
+                            Traffic check
+                        </span>
+
+                        <span>
+                            1,284 visits
+                        </span>
+
                     </div>
 
                 </div>
@@ -987,9 +1132,12 @@
 
         <div class="problem-grid">
 
+
             <div class="problem-card">
 
-                <div class="problem-icon">💸</div>
+                <div class="problem-icon">
+                    💸
+                </div>
 
                 <h3>
                     Expensive retainers
@@ -1006,7 +1154,9 @@
 
             <div class="problem-card">
 
-                <div class="problem-icon">😴</div>
+                <div class="problem-icon">
+                    😴
+                </div>
 
                 <h3>
                     Problems go unnoticed
@@ -1023,7 +1173,9 @@
 
             <div class="problem-card">
 
-                <div class="problem-icon">🔧</div>
+                <div class="problem-icon">
+                    🔧
+                </div>
 
                 <h3>
                     You don't want to fix everything yourself
@@ -1070,7 +1222,9 @@
 
             <div class="feature">
 
-                <h3>Website Performance</h3>
+                <h3>
+                    Website Performance
+                </h3>
 
                 <p>
                     Keep track of your website's speed and performance over time.
@@ -1085,7 +1239,9 @@
 
             <div class="feature">
 
-                <h3>Website Traffic</h3>
+                <h3>
+                    Website Traffic
+                </h3>
 
                 <p>
                     See how much traffic your website receives and monitor changes.
@@ -1100,7 +1256,9 @@
 
             <div class="feature">
 
-                <h3>Plugin Changes</h3>
+                <h3>
+                    Plugin Changes
+                </h3>
 
                 <p>
                     Know when plugins are installed, removed or changed.
@@ -1115,7 +1273,9 @@
 
             <div class="feature">
 
-                <h3>Plugin Activity</h3>
+                <h3>
+                    Plugin Activity
+                </h3>
 
                 <p>
                     See which plugins are active and which ones appear to be
@@ -1131,7 +1291,9 @@
 
             <div class="feature">
 
-                <h3>Plugin Space Usage</h3>
+                <h3>
+                    Plugin Space Usage
+                </h3>
 
                 <p>
                     Find out which plugins are using the most website storage.
@@ -1146,7 +1308,9 @@
 
             <div class="feature">
 
-                <h3>WordPress Errors</h3>
+                <h3>
+                    WordPress Errors
+                </h3>
 
                 <p>
                     Monitor WordPress errors and logs so problems don't stay
@@ -1162,7 +1326,9 @@
 
             <div class="feature">
 
-                <h3>Website Storage</h3>
+                <h3>
+                    Website Storage
+                </h3>
 
                 <p>
                     Monitor how much space your WordPress website is using.
@@ -1177,7 +1343,9 @@
 
             <div class="feature">
 
-                <h3>User Activity</h3>
+                <h3>
+                    User Activity
+                </h3>
 
                 <p>
                     Monitor new users, deleted users, posts, pages and comments.
@@ -1192,7 +1360,9 @@
 
             <div class="feature">
 
-                <h3>Cache Files</h3>
+                <h3>
+                    Cache Files
+                </h3>
 
                 <p>
                     See the number and size of cache files stored by your website.
@@ -1234,6 +1404,7 @@
 
 
         <div class="steps">
+
 
             <div class="step">
 
@@ -1425,31 +1596,53 @@
 
                 <div class="price">
                     $0
-                    <small>forever</small>
+                    <small>
+                        forever
+                    </small>
                 </div>
 
                 <ul class="price-list">
 
-                    <li>1 website</li>
+                    <li>
+                        1 website
+                    </li>
 
-                    <li>Website performance monitoring</li>
+                    <li>
+                        Website performance monitoring
+                    </li>
 
-                    <li>Website traffic monitoring</li>
+                    <li>
+                        Website traffic monitoring
+                    </li>
 
-                    <li>Plugin install/uninstall tracking</li>
+                    <li>
+                        Plugin install/uninstall tracking
+                    </li>
 
-                    <li>WordPress error monitoring</li>
+                    <li>
+                        WordPress error monitoring
+                    </li>
 
-                    <li>Monthly reports</li>
+                    <li>
+                        Monthly reports
+                    </li>
 
-                    <li>60 days report history</li>
+                    <li>
+                        60 days report history
+                    </li>
 
-                    <li>View reports online</li>
+                    <li>
+                        View reports online
+                    </li>
 
                 </ul>
 
-                <a href="wpwatch-plugin.zip" class="btn btn-secondary" style="width:100%;">
+                <a href="wpwatch-plugin.zip"
+                   class="btn btn-secondary"
+                   style="width:100%;">
+
                     Get Started Free
+
                 </a>
 
             </div>
@@ -1472,36 +1665,65 @@
                 </p>
 
                 <div class="price">
+
                     $10
-                    <small>/month</small>
+
+                    <small>
+                        /month
+                    </small>
+
                 </div>
 
                 <ul class="price-list">
 
-                    <li>Up to 2 websites</li>
+                    <li>
+                        Up to 2 websites
+                    </li>
 
-                    <li>Everything in Free</li>
+                    <li>
+                        Everything in Free
+                    </li>
 
-                    <li>Weekly reports</li>
+                    <li>
+                        Weekly reports
+                    </li>
 
-                    <li>Monthly reports</li>
+                    <li>
+                        Monthly reports
+                    </li>
 
-                    <li>Yearly reports</li>
+                    <li>
+                        Yearly reports
+                    </li>
 
-                    <li>Email reports</li>
+                    <li>
+                        Email reports
+                    </li>
 
-                    <li>PDF report export</li>
+                    <li>
+                        PDF report export
+                    </li>
 
-                    <li>CSV export</li>
+                    <li>
+                        CSV export
+                    </li>
 
-                    <li>Extended report history</li>
+                    <li>
+                        Extended report history
+                    </li>
 
-                    <li>Advanced monitoring</li>
+                    <li>
+                        Advanced monitoring
+                    </li>
 
                 </ul>
 
-                <a href="wpwatch-plugin.zip" class="btn btn-primary" style="width:100%;">
+                <a href="wpwatch-plugin.zip"
+                   class="btn btn-primary"
+                   style="width:100%;">
+
                     Install WPWatch
+
                 </a>
 
             </div>
@@ -1537,110 +1759,297 @@
                 <thead>
 
                     <tr>
-                        <th>Feature</th>
-                        <th>Free</th>
-                        <th>Pro</th>
+
+                        <th>
+                            Feature
+                        </th>
+
+                        <th>
+                            Free
+                        </th>
+
+                        <th>
+                            Pro
+                        </th>
+
                     </tr>
 
                 </thead>
 
                 <tbody>
 
-                    <tr>
-                        <td>Websites</td>
-                        <td>1</td>
-                        <td>2</td>
-                    </tr>
 
                     <tr>
-                        <td>Website performance</td>
-                        <td class="check">✓</td>
-                        <td class="check">✓</td>
+
+                        <td>
+                            Websites
+                        </td>
+
+                        <td>
+                            1
+                        </td>
+
+                        <td>
+                            2
+                        </td>
+
                     </tr>
 
-                    <tr>
-                        <td>Website traffic</td>
-                        <td class="check">✓</td>
-                        <td class="check">✓</td>
-                    </tr>
 
                     <tr>
-                        <td>Plugin changes</td>
-                        <td class="check">✓</td>
-                        <td class="check">✓</td>
+
+                        <td>
+                            Website performance
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
                     </tr>
 
-                    <tr>
-                        <td>WordPress errors</td>
-                        <td class="check">✓</td>
-                        <td class="check">✓</td>
-                    </tr>
 
                     <tr>
-                        <td>Plugin activity analysis</td>
-                        <td class="dash">—</td>
-                        <td class="check">✓</td>
+
+                        <td>
+                            Website traffic
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
                     </tr>
 
-                    <tr>
-                        <td>Plugin space usage</td>
-                        <td class="dash">—</td>
-                        <td class="check">✓</td>
-                    </tr>
 
                     <tr>
-                        <td>Website storage monitoring</td>
-                        <td class="dash">—</td>
-                        <td class="check">✓</td>
+
+                        <td>
+                            Plugin changes
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
                     </tr>
 
-                    <tr>
-                        <td>User activity monitoring</td>
-                        <td class="dash">—</td>
-                        <td class="check">✓</td>
-                    </tr>
 
                     <tr>
-                        <td>Cache monitoring</td>
-                        <td class="dash">—</td>
-                        <td class="check">✓</td>
+
+                        <td>
+                            WordPress errors
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
                     </tr>
 
-                    <tr>
-                        <td>Monthly reports</td>
-                        <td class="check">✓</td>
-                        <td class="check">✓</td>
-                    </tr>
 
                     <tr>
-                        <td>Weekly reports</td>
-                        <td class="dash">—</td>
-                        <td class="check">✓</td>
+
+                        <td>
+                            Plugin activity analysis
+                        </td>
+
+                        <td class="dash">
+                            —
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
                     </tr>
 
-                    <tr>
-                        <td>Yearly reports</td>
-                        <td class="dash">—</td>
-                        <td class="check">✓</td>
-                    </tr>
 
                     <tr>
-                        <td>Email reports</td>
-                        <td class="dash">—</td>
-                        <td class="check">✓</td>
+
+                        <td>
+                            Plugin space usage
+                        </td>
+
+                        <td class="dash">
+                            —
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
                     </tr>
 
-                    <tr>
-                        <td>PDF export</td>
-                        <td class="dash">—</td>
-                        <td class="check">✓</td>
-                    </tr>
 
                     <tr>
-                        <td>CSV export</td>
-                        <td class="dash">—</td>
-                        <td class="check">✓</td>
+
+                        <td>
+                            Website storage monitoring
+                        </td>
+
+                        <td class="dash">
+                            —
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
                     </tr>
+
+
+                    <tr>
+
+                        <td>
+                            User activity monitoring
+                        </td>
+
+                        <td class="dash">
+                            —
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Cache monitoring
+                        </td>
+
+                        <td class="dash">
+                            —
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Monthly reports
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Weekly reports
+                        </td>
+
+                        <td class="dash">
+                            —
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Yearly reports
+                        </td>
+
+                        <td class="dash">
+                            —
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Email reports
+                        </td>
+
+                        <td class="dash">
+                            —
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            PDF export
+                        </td>
+
+                        <td class="dash">
+                            —
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            CSV export
+                        </td>
+
+                        <td class="dash">
+                            —
+                        </td>
+
+                        <td class="check">
+                            ✓
+                        </td>
+
+                    </tr>
+
 
                 </tbody>
 
@@ -1671,6 +2080,7 @@
 
 
         <div class="faq">
+
 
             <details>
 
@@ -1758,6 +2168,7 @@
 
             </details>
 
+
         </div>
 
     </div>
@@ -1801,6 +2212,7 @@
 
         <div class="footer-grid">
 
+
             <div>
 
                 <div class="logo">
@@ -1808,8 +2220,10 @@
                 </div>
 
                 <p style="margin-top:12px; max-width:350px;">
+
                     Simple WordPress monitoring for website owners who don't
                     want to pay a developer to babysit their website.
+
                 </p>
 
             </div>
@@ -1864,6 +2278,7 @@
 
             </div>
 
+
         </div>
 
 
@@ -1903,7 +2318,8 @@
             navLinks.style.right = "0";
             navLinks.style.padding = "20px";
             navLinks.style.background = "#07111f";
-            navLinks.style.borderBottom = "1px solid rgba(255,255,255,.08)";
+            navLinks.style.borderBottom =
+                "1px solid rgba(255,255,255,.08)";
 
         }
 
