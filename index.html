@@ -578,7 +578,7 @@
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(2,1fr);
+            grid-template-columns: repeat(3,1fr);
             gap: 22px;
             max-width: 850px;
             margin: auto;
@@ -595,6 +595,10 @@
         .price-card.pro {
             border-color: rgba(40,167,69,.55);
             box-shadow: 0 20px 60px rgba(40,167,69,.08);
+        }
+
+        .price-card.multi-site {
+            border-color: rgba(40,167,69,.35);
         }
 
         .popular {
@@ -790,7 +794,7 @@
            RESPONSIVE
         ========================= */
 
-        @media (max-width: 900px) {
+        @media (max-width: 1050px) {
 
             .hero-grid,
             .help-grid {
@@ -866,6 +870,25 @@
                 width: 100%;
             }
         }
+    
+        /* UPDATED 2026 PRICING / FEATURE PRESENTATION */
+        .pricing-grid.three-plans { grid-template-columns: repeat(3,1fr); max-width: 1100px; }
+        .price-card.multi { border-color: rgba(82,214,110,.35); }
+        .price-card .plan-kicker { color: var(--green-light); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+        .price-card .plan-limit { color: #fff; font-size: 15px; font-weight: 750; margin-top: 8px; }
+        .price-card .plan-note { color: var(--muted); font-size: 13px; margin-top: 5px; }
+        .feature-group { margin-bottom: 46px; }
+        .feature-group:last-child { margin-bottom: 0; }
+        .feature-group-title { display:flex; align-items:center; gap:10px; margin:0 0 16px; font-size:18px; }
+        .feature-group-title::before { content:""; width:8px; height:8px; border-radius:50%; background:var(--green-light); box-shadow:0 0 12px rgba(82,214,110,.4); }
+        .feature-note { margin-top: 28px; color: var(--muted); font-size: 13px; text-align:center; }
+        .comparison .plan-head { color:var(--green-light); }
+        .comparison .multi-head { color:#fff; }
+        .comparison td:first-child { color:#d7dee8; font-weight:600; }
+        .comparison .muted-cell { color:#718096; }
+        .pricing-callout { margin: 0 auto 28px; max-width: 850px; padding: 14px 18px; border:1px solid rgba(40,167,69,.25); background:rgba(40,167,69,.06); border-radius:12px; color:#c9d6e2; font-size:14px; text-align:center; }
+        @media (max-width: 1100px) { .pricing-grid.three-plans { grid-template-columns:1fr; max-width:650px; } }
+
     </style>
 </head>
 
@@ -953,7 +976,7 @@
             </div>
 
             <div class="hero-note">
-                Free to start · No monthly developer retainer required
+                Free to start · Monitor one site free · Upgrade when you need more
             </div>
 
 
@@ -1195,292 +1218,74 @@
 </section>
 
 
+
 <!-- =========================
      FEATURES
 ========================= -->
-
 <section id="features">
-
     <div class="container">
-
         <div class="section-header">
-
-            <h2>
-                What WPWatch watches
-            </h2>
-
-            <p>
-                A simple overview of the important things happening on your
-                WordPress website.
-            </p>
-
+            <h2>Everything WPWatch monitors</h2>
+            <p>The plugin goes beyond a simple uptime check. It watches performance, traffic, changes, errors, storage, security and your WordPress activity.</p>
         </div>
 
-
-        <div class="features-grid">
-
-
-            <div class="feature">
-
-                <h3>
-                    Website Performance
-                </h3>
-
-                <p>
-                    Keep track of your website's speed and performance over time.
-                </p>
-
-                <span class="feature-tag">
-                    Free + Pro
-                </span>
-
+        <div class="feature-group">
+            <h3 class="feature-group-title">Core monitoring</h3>
+            <div class="features-grid">
+                <div class="feature"><h3>Website Performance</h3><p>Track server response time, PHP memory, database size and site size over time.</p><span class="feature-tag">Free + Pro</span></div>
+                <div class="feature"><h3>Website Traffic</h3><p>See daily page views and approximate unique visitors collected directly by your WordPress site.</p><span class="feature-tag">Free + Pro</span></div>
+                <div class="feature"><h3>Plugin Changes</h3><p>Record plugin installs, removals, activations, deactivations and version updates.</p><span class="feature-tag">Free + Pro</span></div>
+                <div class="feature"><h3>WordPress Errors</h3><p>Capture WordPress/PHP errors with severity, occurrences, file, line and first/last seen times.</p><span class="feature-tag">Free + Pro</span></div>
+                <div class="feature"><h3>User Activity</h3><p>Track WordPress admin and content activity such as user actions, posts, pages, comments and other recorded changes.</p><span class="feature-tag">Free + Pro</span></div>
+                <div class="feature"><h3>Reports</h3><p>Create custom reports and review monitoring history from inside the WordPress dashboard.</p><span class="feature-tag">Free + Pro</span></div>
             </div>
-
-
-            <div class="feature">
-
-                <h3>
-                    Website Traffic
-                </h3>
-
-                <p>
-                    See how much traffic your website receives and monitor changes.
-                </p>
-
-                <span class="feature-tag">
-                    Free + Pro
-                </span>
-
-            </div>
-
-
-            <div class="feature">
-
-                <h3>
-                    Plugin Changes
-                </h3>
-
-                <p>
-                    Know when plugins are installed, removed or changed.
-                </p>
-
-                <span class="feature-tag">
-                    Free + Pro
-                </span>
-
-            </div>
-
-
-            <div class="feature">
-
-                <h3>
-                    Plugin Activity
-                </h3>
-
-                <p>
-                    See which plugins are active and which ones appear to be
-                    doing more work than others.
-                </p>
-
-                <span class="feature-tag">
-                    Pro
-                </span>
-
-            </div>
-
-
-            <div class="feature">
-
-                <h3>
-                    Plugin Space Usage
-                </h3>
-
-                <p>
-                    Find out which plugins are using the most website storage.
-                </p>
-
-                <span class="feature-tag">
-                    Pro
-                </span>
-
-            </div>
-
-
-            <div class="feature">
-
-                <h3>
-                    WordPress Errors
-                </h3>
-
-                <p>
-                    Monitor WordPress errors and logs so problems don't stay
-                    hidden.
-                </p>
-
-                <span class="feature-tag">
-                    Free + Pro
-                </span>
-
-            </div>
-
-
-            <div class="feature">
-
-                <h3>
-                    Website Storage
-                </h3>
-
-                <p>
-                    Monitor how much space your WordPress website is using.
-                </p>
-
-                <span class="feature-tag">
-                    Pro
-                </span>
-
-            </div>
-
-
-            <div class="feature">
-
-                <h3>
-                    User Activity
-                </h3>
-
-                <p>
-                    Monitor new users, deleted users, posts, pages and comments.
-                </p>
-
-                <span class="feature-tag">
-                    Pro
-                </span>
-
-            </div>
-
-
-            <div class="feature">
-
-                <h3>
-                    Cache Files
-                </h3>
-
-                <p>
-                    See the number and size of cache files stored by your website.
-                </p>
-
-                <span class="feature-tag">
-                    Pro
-                </span>
-
-            </div>
-
-
         </div>
 
+        <div class="feature-group">
+            <h3 class="feature-group-title">Advanced monitoring</h3>
+            <div class="features-grid">
+                <div class="feature"><h3>Storage Monitoring</h3><p>See server capacity, used/free space and the footprint of WordPress, uploads, plugins, themes and the database.</p><span class="feature-tag">Pro</span></div>
+                <div class="feature"><h3>Server &amp; Inodes</h3><p>View PHP, database, web server and OS information plus file and directory counts for key WordPress folders.</p><span class="feature-tag">Pro</span></div>
+                <div class="feature"><h3>Cache Monitoring</h3><p>Monitor cache file count, total cache size and cache access status.</p><span class="feature-tag">Pro</span></div>
+                <div class="feature"><h3>SSL Security</h3><p>Check certificate status, provider, hostname, issue date, expiry date and days remaining.</p><span class="feature-tag">Pro</span></div>
+                <div class="feature"><h3>Plugin Space Usage</h3><p>See how much storage individual plugins are using when WPWatch records plugin changes.</p><span class="feature-tag">Pro</span></div>
+                <div class="feature"><h3>Deeper Reports</h3><p>Pro reports can include advanced storage, cache, SSL and server information alongside the core monitoring data.</p><span class="feature-tag">Pro</span></div>
+            </div>
+        </div>
+
+        <div class="feature-group">
+            <h3 class="feature-group-title">Reporting &amp; exports</h3>
+            <div class="features-grid">
+                <div class="feature"><h3>Weekly Reports</h3><p>Schedule weekly reports for a regular view of what changed and what needs attention.</p><span class="feature-tag">Pro</span></div>
+                <div class="feature"><h3>Monthly Reports</h3><p>Generate monthly reports for a broader view of website health and activity.</p><span class="feature-tag">Free + Pro</span></div>
+                <div class="feature"><h3>Email Reports</h3><p>Send generated reports to your account email or a custom email address.</p><span class="feature-tag">Pro</span></div>
+                <div class="feature"><h3>PDF Export</h3><p>Export saved or filtered reports as PDF files.</p><span class="feature-tag">Pro</span></div>
+                <div class="feature"><h3>CSV / Spreadsheet Export</h3><p>Export report data for further analysis outside WordPress.</p><span class="feature-tag">Pro</span></div>
+                <div class="feature"><h3>Period Comparisons</h3><p>Compare performance periods to understand whether response times are improving or getting worse.</p><span class="feature-tag">Pro</span></div>
+            </div>
+        </div>
+
+        <p class="feature-note">Traffic in the current plugin is aggregated by day. WPWatch does not currently store visitor IP addresses, browser types, device types or countries.</p>
     </div>
-
 </section>
-
 
 <!-- =========================
      HOW IT WORKS
 ========================= -->
-
 <section id="how-it-works" class="problem">
-
     <div class="container">
-
         <div class="section-header">
-
-            <h2>
-                Simple from day one
-            </h2>
-
-            <p>
-                Everything happens from inside your WordPress dashboard.
-            </p>
-
+            <h2>Simple from day one</h2>
+            <p>Everything happens from inside your WordPress dashboard.</p>
         </div>
-
-
         <div class="steps">
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    1
-                </div>
-
-                <h3>
-                    Install WPWatch
-                </h3>
-
-                <p>
-                    Install the free WordPress plugin on your website.
-                </p>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    2
-                </div>
-
-                <h3>
-                    Create your account
-                </h3>
-
-                <p>
-                    Create your WPWatch account directly inside WordPress.
-                </p>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    3
-                </div>
-
-                <h3>
-                    WPWatch starts watching
-                </h3>
-
-                <p>
-                    The plugin collects the information needed to monitor
-                    your website.
-                </p>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    4
-                </div>
-
-                <h3>
-                    Get your reports
-                </h3>
-
-                <p>
-                    View reports and see what needs attention without paying
-                    a developer to check manually.
-                </p>
-
-            </div>
-
+            <div class="step"><div class="step-number">1</div><h3>Install WPWatch</h3><p>Install the free WordPress plugin on your website.</p></div>
+            <div class="step"><div class="step-number">2</div><h3>Create your account</h3><p>Create or connect your WPWatch account directly inside WordPress.</p></div>
+            <div class="step"><div class="step-number">3</div><h3>WPWatch starts watching</h3><p>Monitoring runs automatically. Free checks run hourly; Pro monitoring runs every 5 minutes.</p></div>
+            <div class="step"><div class="step-number">4</div><h3>Read your reports</h3><p>See performance, traffic, changes, errors and advanced infrastructure data without digging through technical logs yourself.</p></div>
         </div>
-
     </div>
-
 </section>
-
 
 <!-- =========================
      ALERT
@@ -1557,175 +1362,114 @@
 </section>
 
 
+
 <!-- =========================
      PRICING
 ========================= -->
-
 <section id="pricing">
 
     <div class="container">
 
         <div class="section-header">
-
-            <h2>
-                Start free. Upgrade when you need more.
-            </h2>
-
-            <p>
-                The free plan gives you the basics. Pro unlocks deeper
-                monitoring and more detailed reporting.
-            </p>
-
+            <h2>Simple pricing that scales with your websites</h2>
+            <p>Start free. Upgrade to Pro for one website, or Pro Multi-site when you need to monitor up to seven.</p>
         </div>
-
 
         <div class="pricing-grid">
 
-
             <!-- FREE -->
-
             <div class="price-card">
-
-                <h3>
-                    Free
-                </h3>
-
+                <h3>Free</h3>
                 <p class="price-description">
                     For website owners who want basic monitoring.
                 </p>
 
                 <div class="price">
                     $0
-                    <small>
-                        forever
-                    </small>
+                    <small>forever</small>
                 </div>
 
                 <ul class="price-list">
-
-                    <li>
-                        1 website
-                    </li>
-
-                    <li>
-                        Website performance monitoring
-                    </li>
-
-                    <li>
-                        Website traffic monitoring
-                    </li>
-
-                    <li>
-                        Plugin install/uninstall tracking
-                    </li>
-
-                    <li>
-                        WordPress error monitoring
-                    </li>
-
-                    <li>
-                        Monthly reports
-                    </li>
-
-                    <li>
-                        60 days report history
-                    </li>
-
-                    <li>
-                        View reports online
-                    </li>
-
+                    <li>1 website</li>
+                    <li>Website performance monitoring</li>
+                    <li>Website traffic monitoring</li>
+                    <li>Plugin install/uninstall tracking</li>
+                    <li>WordPress error monitoring</li>
+                    <li>Monthly reports</li>
+                    <li>60 days report history</li>
+                    <li>View reports online</li>
                 </ul>
 
-                <a href="wpwatch-plugin.zip"
-                   class="btn btn-secondary"
-                   style="width:100%;">
-
+                <a href="wpwatch-plugin.zip" class="btn btn-secondary" style="width:100%;">
                     Get Started Free
-
                 </a>
-
             </div>
 
-
             <!-- PRO -->
-
             <div class="price-card pro">
+                <div class="popular">PRO</div>
 
-                <div class="popular">
-                    PRO
-                </div>
-
-                <h3>
-                    Pro
-                </h3>
+                <h3>Pro</h3>
 
                 <p class="price-description">
-                    For owners who want deeper monitoring and reporting.
+                    For owners who want deeper monitoring for one website.
                 </p>
 
                 <div class="price">
-
-                    $10
-
-                    <small>
-                        /month
-                    </small>
-
+                    $5
+                    <small>/month</small>
                 </div>
 
                 <ul class="price-list">
-
-                    <li>
-                        Up to 2 websites
-                    </li>
-
-                    <li>
-                        Everything in Free
-                    </li>
-
-                    <li>
-                        Weekly reports
-                    </li>
-
-                    <li>
-                        Monthly reports
-                    </li>
-
-                    <li>
-                        Yearly reports
-                    </li>
-
-                    <li>
-                        Email reports
-                    </li>
-
-                    <li>
-                        PDF report export
-                    </li>
-
-                    <li>
-                        CSV export
-                    </li>
-
-                    <li>
-                        Extended report history
-                    </li>
-
-                    <li>
-                        Advanced monitoring
-                    </li>
-
+                    <li>1 website</li>
+                    <li>Everything in Free</li>
+                    <li>Weekly reports</li>
+                    <li>Monthly reports</li>
+                    <li>Yearly reports</li>
+                    <li>Email reports</li>
+                    <li>PDF report export</li>
+                    <li>CSV export</li>
+                    <li>Extended report history</li>
+                    <li>Advanced monitoring</li>
                 </ul>
 
-                <a href="wpwatch-plugin.zip"
-                   class="btn btn-primary"
-                   style="width:100%;">
-
-                    Install WPWatch
-
+                <a href="wpwatch-plugin.zip" class="btn btn-primary" style="width:100%;">
+                    Get Pro
                 </a>
+            </div>
 
+            <!-- PRO MULTI-SITE -->
+            <div class="price-card pro multi-site">
+                <div class="popular">MULTI-SITE</div>
+
+                <h3>Pro Multi-site</h3>
+
+                <p class="price-description">
+                    For owners who need to monitor multiple WordPress websites.
+                </p>
+
+                <div class="price">
+                    $25
+                    <small>/month</small>
+                </div>
+
+                <ul class="price-list">
+                    <li>Up to 7 websites</li>
+                    <li>Everything in Pro</li>
+                    <li>Monitor multiple websites from one account</li>
+                    <li>Advanced monitoring on every connected website</li>
+                    <li>Weekly reports</li>
+                    <li>Monthly reports</li>
+                    <li>Yearly reports</li>
+                    <li>Email reports</li>
+                    <li>PDF report export</li>
+                    <li>CSV export</li>
+                    <li>Extended report history</li>
+                </ul>
+
+                <a href="wpwatch-plugin.zip" class="btn btn-primary" style="width:100%;">
+                    Get Pro Multi-site
+                </a>
             </div>
 
         </div>
@@ -1734,325 +1478,143 @@
 
 </section>
 
-
 <!-- =========================
      COMPARISON
 ========================= -->
-
 <section class="problem">
 
     <div class="container">
 
         <div class="section-header">
-
-            <h2>
-                Free vs Pro
-            </h2>
-
+            <h2>Free vs Pro vs Pro Multi-site</h2>
+            <p>Compare the plans and choose the website capacity you need.</p>
         </div>
-
 
         <div class="comparison-wrapper">
 
             <table class="comparison">
-
                 <thead>
-
                     <tr>
-
-                        <th>
-                            Feature
-                        </th>
-
-                        <th>
-                            Free
-                        </th>
-
-                        <th>
-                            Pro
-                        </th>
-
+                        <th>Feature</th>
+                        <th>Free</th>
+                        <th>Pro</th>
+                        <th>Pro Multi-site</th>
                     </tr>
-
                 </thead>
 
                 <tbody>
-
-
                     <tr>
-
-                        <td>
-                            Websites
-                        </td>
-
-                        <td>
-                            1
-                        </td>
-
-                        <td>
-                            2
-                        </td>
-
+                        <td>Websites</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>Up to 7</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            Website performance
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>Website performance</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            Website traffic
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>Website traffic</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            Plugin changes
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>Plugin changes</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            WordPress errors
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>WordPress errors</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            Plugin activity analysis
-                        </td>
-
-                        <td class="dash">
-                            —
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>Plugin activity analysis</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            Plugin space usage
-                        </td>
-
-                        <td class="dash">
-                            —
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>Plugin space usage</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            Website storage monitoring
-                        </td>
-
-                        <td class="dash">
-                            —
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>Website storage monitoring</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            User activity monitoring
-                        </td>
-
-                        <td class="dash">
-                            —
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>User activity monitoring</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            Cache monitoring
-                        </td>
-
-                        <td class="dash">
-                            —
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>Cache monitoring</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            Monthly reports
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>Monthly reports</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            Weekly reports
-                        </td>
-
-                        <td class="dash">
-                            —
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>Weekly reports</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            Yearly reports
-                        </td>
-
-                        <td class="dash">
-                            —
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>Yearly reports</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            Email reports
-                        </td>
-
-                        <td class="dash">
-                            —
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>Email reports</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            PDF export
-                        </td>
-
-                        <td class="dash">
-                            —
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>PDF export</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
 
-
                     <tr>
-
-                        <td>
-                            CSV export
-                        </td>
-
-                        <td class="dash">
-                            —
-                        </td>
-
-                        <td class="check">
-                            ✓
-                        </td>
-
+                        <td>CSV export</td>
+                        <td class="dash">—</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
                     </tr>
-
-
                 </tbody>
-
             </table>
 
         </div>
@@ -2065,116 +1627,23 @@
 <!-- =========================
      FAQ
 ========================= -->
-
 <section id="faq">
-
     <div class="container">
-
         <div class="section-header">
-
-            <h2>
-                Frequently asked questions
-            </h2>
-
+            <h2>Frequently asked questions</h2>
         </div>
-
-
         <div class="faq">
-
-
-            <details>
-
-                <summary>
-                    Do I need to create an account on the WPWatch website?
-                </summary>
-
-                <p>
-                    No. Your WPWatch account is created and managed directly
-                    inside the WordPress plugin.
-                </p>
-
-            </details>
-
-
-            <details>
-
-                <summary>
-                    Where is my monitoring data stored?
-                </summary>
-
-                <p>
-                    WPWatch securely stores your monitoring and report data
-                    in its cloud database so you can keep your report history.
-                </p>
-
-            </details>
-
-
-            <details>
-
-                <summary>
-                    Can the plugin change my subscription?
-                </summary>
-
-                <p>
-                    No. The plugin only reads the subscription status assigned
-                    to your account. Subscription changes are handled by
-                    WPWatch's payment system.
-                </p>
-
-            </details>
-
-
-            <details>
-
-                <summary>
-                    Do I need a developer to use WPWatch?
-                </summary>
-
-                <p>
-                    No. WPWatch is designed for WordPress website owners who
-                    aren't developers.
-                </p>
-
-            </details>
-
-
-            <details>
-
-                <summary>
-                    Can I cancel Pro?
-                </summary>
-
-                <p>
-                    Yes. Pro subscriptions are managed through the WPWatch
-                    subscription system.
-                </p>
-
-            </details>
-
-
-            <details>
-
-                <summary>
-                    What happens if my website is having a problem?
-                </summary>
-
-                <p>
-                    WPWatch reports the information it can detect and helps
-                    you understand what needs attention. If you need someone
-                    to make a technical change, you can contact support
-                    separately.
-                </p>
-
-            </details>
-
-
+            <details><summary>Do I need to create an account on the WPWatch website?</summary><p>No. Your WPWatch account is created and managed directly inside the WordPress plugin.</p></details>
+            <details><summary>Where is my monitoring data stored?</summary><p>Your monitoring and report data is stored in this WordPress installation. Subscription status is verified separately through the WPWatch subscription system.</p></details>
+            <details><summary>What is the difference between Pro and Pro Multi-site?</summary><p>Pro costs $5/month and allows up to 3 websites. Pro Multi-site costs $25/month and allows up to 7 websites.</p></details>
+            <details><summary>How often does WPWatch check my website?</summary><p>Free monitoring checks run hourly. Pro-level monitoring runs every 5 minutes.</p></details>
+            <details><summary>Does WPWatch store visitor IP addresses?</summary><p>Not in the current plugin version. Traffic is stored as daily page views and approximate unique visitors using a first-party random visitor cookie. IP address, browser, device and country details are not currently stored.</p></details>
+            <details><summary>Can I export my reports?</summary><p>Pro-level reporting supports PDF and CSV/spreadsheet exports, as well as report emails.</p></details>
+            <details><summary>Can I cancel Pro?</summary><p>Yes. Subscription changes are handled through the WPWatch subscription system.</p></details>
+            <details><summary>Do I need a developer to use WPWatch?</summary><p>No. WPWatch is designed for WordPress website owners who aren't developers. It shows the information in plain language so you can decide what needs attention.</p></details>
         </div>
-
     </div>
-
 </section>
-
 
 <!-- =========================
      FINAL CTA
@@ -2189,8 +1658,7 @@
         </h2>
 
         <p>
-            Install WPWatch and stop paying someone every month just to check
-            whether your WordPress website is okay.
+            Install WPWatch and get a clear view of performance, traffic, changes, errors, storage and server health from inside WordPress.
         </p>
 
         <a href="wpwatch-plugin.zip" class="btn btn-primary">
